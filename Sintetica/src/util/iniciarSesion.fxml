@@ -82,7 +82,7 @@
                   <Font name="System Bold" size="13.0" />
                </font>
             </Label>
-            <Label layoutX="22.0" layoutY="575.0" text="Fecha: 27 abril 2025">
+            <Label layoutX="22.0" layoutY="575.0" text="Fecha: ">
                <font>
                   <Font name="System Bold" size="13.0" />
                </font>
@@ -98,6 +98,16 @@
                </font>
             </Label>
             <StackPane layoutX="144.0" layoutY="524.0" prefHeight="81.0" prefWidth="92.0" style="-fx-background-image: url('/util/Logo.png'); -fx-background-size: contain; -fx-background-position: center; -fx-background-repeat: no-repeat;" />
+            <Label layoutX="76.0" layoutY="575.0">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Label>
+            <Label fx:id="LabelFecha" layoutX="62.0" layoutY="575.0" prefHeight="19.0" prefWidth="100.0">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Label>
          </children>
       </Pane>
       <Pane fx:id="paneReserva" layoutX="242.0" layoutY="2.0" prefHeight="601.0" prefWidth="659.0" style="-fx-background-color: #ffffff;" visible="false">
