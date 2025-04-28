@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Canchas Sintéticas Supercampeones</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Oswald:wght@400;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Encabezado -->
+<header>
+    <div class="container">
+        <!-- Logo de la empresa -->
+        <div class="logo">
+            <img src="images/Logo.jpg" alt="Logo de Canchas Sintéticas Supercampeones">
+        </div>
+        <!-- Título y eslogan -->
+        <div class="titulo-eslogan">
+            <h1>Canchas Sintéticas Supercampeones</h1>
+            <p>¡Reserva tu cancha favorita y vive la experiencia del fútbol!</p>
+        </div>
+    </div>
+</header>
+
+    <!-- Sección de canchas -->
+    <main class="container">
+        <section id="canchas">
+            <h2>Nuestras Canchas</h2>
+            <div class="canchas-grid">
+                <!-- Cancha de Fútbol 5 -->
+                <div class="cancha">
+                    <img src="images/Imagen1.jpg" alt="Cancha de Fútbol 5">
+                    <h3>Fútbol 5</h3>
+                    <button class="reservar-btn" data-cancha="futbol5">Reservar</button>
+                </div>
+                <!-- Cancha de Fútbol 7 -->
+                <div class="cancha">
+                    <img src="images/Imagen1.jpg" alt="Cancha de Fútbol 7">
+                    <h3>Fútbol 7</h3>
+                    <button class="reservar-btn" data-cancha="futbol7">Reservar</button>
+                </div>
+                <!-- Cancha de Fútbol 9 -->
+                <div class="cancha">
+                    <img src="images/Imagen1.jpg" alt="Cancha de Fútbol 10">
+                    <h3>Fútbol 10</h3>
+                    <button class="reservar-btn" data-cancha="futbol10">Reservar</button>
+                </div>
+                <!-- Cancha de Vóley Playa 1 -->
+                <div class="cancha">
+                    <img src="images/Imagen2.jpg" alt="Cancha de Vóley Playa">
+                    <h3>Vóley Playa 1</h3>
+                    <button class="reservar-btn" data-cancha="voley1">Reservar</button>
+                </div>
+                <!-- Cancha de Vóley Playa 2 -->
+                <div class="cancha">
+                    <img src="images/Imagen2.jpg" alt="Cancha de Vóley Playa">
+                    <h3>Vóley Playa 2</h3>
+                    <button class="reservar-btn" data-cancha="voley2">Reservar</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Formulario de reserva (oculto inicialmente) -->
+    <section id="formulario-reserva" class="hidden">
+        <div class="container">
+            <h2 id="titulo-reserva">Reserva tu Cancha</h2>
+            <form id="reserva-form">
+                <!-- Selección de fecha y hora -->
+                <div class="form-group">
+                    <label for="fecha">Fecha de reserva:</label>
+                    <input type="date" id="fecha" name="fecha" required>
+                </div>
+                <div class="form-group">
+                    <label for="hora">Hora de reserva:</label>
+                    <select id="hora" name="hora" required>
+                        <option value="16:00">4:00 PM - 5:00 PM</option>
+                        <option value="17:00">5:00 PM - 6:00 PM</option>
+                        <option value="18:00">6:00 PM - 7:00 PM</option>
+                        <option value="19:00">7:00 PM - 8:00 PM</option>
+                        <option value="20:00">8:00 PM - 9:00 PM</option>
+                        <option value="21:00">9:00 PM - 10:00 PM</option>
+                        <option value="22:00">10:00 PM - 11:00 PM</option>
+                        <option value="23:00">11:00 PM - 12:00 AM</option>
+                        <option value="00:00">12:00 AM - 1:00 AM</option>
+                    </select>
+                </div>
+                <!-- Botón para verificar disponibilidad -->
+                <button type="button" id="verificar-disponibilidad" class="reservar-btn">Verificar Disponibilidad</button>
+
+                <!-- Datos del cliente (oculto inicialmente) -->
+                <div id="datos-cliente" class="hidden">
+                    <div class="form-group">
+                        <label for="nombre">Nombre completo:</label>
+                        <input type="text" id="nombre" name="nombre" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="telefono">Teléfono:</label>
+                        <input type="tel" id="telefono" name="telefono" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="correo">Correo electrónico:</label>
+                        <input type="email" id="correo" name="correo" required>
+                    </div>
+                    <button type="submit" class="reservar-btn">Confirmar Reserva</button>
+                </div>
+            </form>
+            <!-- Mensaje de contacto debajo del formulario -->
+            <p class="mensaje-contacto">Si tienes alguna duda con tu reserva, puedes llamar al Tel. 320 4409734 o 320 2035493.</p>
+        </div>
+    </section>
+
+    <!-- Pie de página -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2023 Canchas Sintéticas Supercampeones. Todos los derechos reservados.</p>
+            <p>Si tienes alguna duda con tu reserva, puedes llamar al Tel. 320 4409734 o 320 2035493.</p>   
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

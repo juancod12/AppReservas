@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="529.0" prefWidth="627.0" style="-fx-background-image: url('/util/login.png');" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ControlScenaBuild">
+   <children>
+      <Label layoutX="14.0" layoutY="49.0" prefHeight="83.0" prefWidth="265.0" style="-fx-font-weight: bold; -fx-text-fill: #000099;" text="Registrando Usuario">
+         <font>
+            <Font size="23.0" />
+         </font></Label>
+      <TextField fx:id="usuario" layoutX="55.0" layoutY="175.0" promptText="ejem: David12" />
+      <PasswordField fx:id="password" layoutX="55.0" layoutY="252.0" />
+      <Label layoutX="55.0" layoutY="144.0" text="Usuario:" />
+      <Label layoutX="55.0" layoutY="222.0" text="Contraseña:" />
+      <Button id="guardarDatos" layoutX="76.0" layoutY="332.0" mnemonicParsing="false" onAction="#GuardarDatos" style="-fx-background-color: #0000ff; -fx-text-fill: #ffffff;" text="Registrar Usuario" />
+      <Label fx:id="messaComplete" layoutX="49.0" layoutY="283.0" style="-fx-text-fill: red;" text="Porfavor complete los campos *" visible="false" />
+      <Label fx:id="messExitoGuardado" layoutX="20.0" layoutY="300.0" style="-fx-text-fill: green;" text="Usuario Guardado exitosamente" visible="false">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Button layoutX="87.0" layoutY="368.0" mnemonicParsing="false" onAction="#volvelInicio" style="-fx-background-color: #0000ff; -fx-text-fill: #ffffff;" text="Iniciar Sesion" />
+   </children>
+</AnchorPane>
