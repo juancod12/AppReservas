@@ -9,8 +9,8 @@
             "name": "ventana",
             "request": "launch",
             "mainClass": "App.ventana",
-            "projectName": "Sintetica-App_f651bb38",
-            "vmArgs": "--module-path \"C:\\Program Files\\Java\\javafx-sdk-23.0.2\\lib\" --add-modules javafx.controls,javafx.fxml"
+            "projectName": "AppReservas_ac2aef",
+            "vmArgs": "--module-path \"C:\\Java\\javafx-sdk-23.0.2\\lib\" --add-modules javafx.controls,javafx.fxml"
         }
     ]
 } 

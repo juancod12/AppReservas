@@ -9,10 +9,10 @@ public class Conexion {
      // Datos de la conexión
      private static final String URL = "jdbc:mysql://localhost:3306/negocio";  // direcion de mi base de datos
      private static final String USUARIO = "root";   //usuario
-     private static final String CONTRASEÑA = "juan12drh#";  //Password
+     private static final String CONTRASEÑA = "12152005David@";  //Password
 
 
-     public static Connection conectar() {// metodo para conectar la base de datos
+    public static Connection conectar() {// metodo para conectar la base de datos
         Connection conexion = null;
         try {
             // Establecer la conexión
@@ -24,7 +24,5 @@ public class Conexion {
         return conexion;
     }
     
-  
- 
     
 }
