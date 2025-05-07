@@ -14,13 +14,13 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import service.BarraDeBusqueda;
+import service.Disponibilidad;
 import service.obtenerReservasH;
 import javafx.stage.Stage;
 import model.Reserva;
 
 public class ventana extends Application {
     Parent root;
-   
     
     @Override
     public void start(Stage primaryStage) {
@@ -43,7 +43,6 @@ public class ventana extends Application {
 
     public static void main(String[] args) throws Exception {
         Connection  conexion =  Conexion.conectar();
-      
 
         if (conexion != null) {
             try {
@@ -55,7 +54,7 @@ public class ventana extends Application {
         }
         launch(args);
 
-    
+        System.out.println("¿Está ocupada la cancha de futbol 5? " + Disponibilidad.estaOcupadaAhora("Fútbol 5"));
+
     }
-   
 }

@@ -14,13 +14,13 @@ import model.Reserva;
 /*Carga las reservas a un Array con objetos de tipo Reserva */
 public class obtenerReservasH {
 
-     public static ObservableList<Reserva> obtenerReservas() {
+    public static ObservableList<Reserva> obtenerReservas() {
         ObservableList<Reserva> reservas = FXCollections.observableArrayList();
         String query = "SELECT nombre, fecha, hora, cancha, id, telefono, correo  FROM reservas";
 
         try (Connection conn = Conexion.conectar();
-             PreparedStatement stmt = conn.prepareStatement(query);
-             ResultSet rs = stmt.executeQuery()) {
+            PreparedStatement stmt = conn.prepareStatement(query);
+            ResultSet rs = stmt.executeQuery()) {
 
             while (rs.next()) {
                 

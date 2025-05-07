@@ -29,7 +29,8 @@ header .container {
 
 header .logo img {
     max-height: 80px; /* Ajusta la altura del logo */
-    width: auto; /* Mantiene la proporción del logo */
+    width: auto;
+    height: auto;
 }
 
 header .titulo-eslogan {
@@ -176,4 +177,9 @@ main .container {
     background-color: rgba(0, 0, 0, 0.5); /* Fondo negro semitransparente */
     padding: 20px;
     border-radius: 8px;
+}
+
+.cancha.p{
+    text-align: left;
+    
 }
