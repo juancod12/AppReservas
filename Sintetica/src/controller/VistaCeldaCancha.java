@@ -1,7 +1,5 @@
 package controller;
 
-import javafx.animation.KeyFrame;
-import javafx.animation.Timeline;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -12,25 +10,54 @@ import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
-import javafx.util.Duration;
 import model.Cancha;
 import service.EliminarCancha;
 import service.Disponibilidad;
 
+
 public class VistaCeldaCancha extends ListCell<Cancha> {
 
-    private HBox hbox = new HBox(50);
-    private Circle estadoCircle = new Circle(8);
-    private Label infoLabel = new Label();
-    private Label infoLabel2 = new Label();
-    private VBox infoContainer = new VBox(infoLabel);
-    private Region espacio = new Region();
-    private Button deleteButton = new Button("Eliminar");
+    HBox hbox = new HBox(50);
+    Circle estadoCircle = new Circle(8);
+    Label infoLabel = new Label();
+    Label infoLabel2 = new Label();
+    VBox infoContainer = new VBox(infoLabel);
+    Region espacio = new Region();
+    Button deleteButton = new Button("Eliminar");
 
-    private Timeline timeline; // Reemplazo de Timer para JavaFX
+    {
+        java.util.Timer timer = new java.util.Timer(true);
+        timer.scheduleAtFixedRate(new java.util.TimerTask() {
+    @Override
+    public void run() {
+        javafx.application.Platform.runLater(() -> {
+            Cancha cancha = getItem();
+            if (cancha != null) {
+                boolean ocupada = Disponibilidad.estaOcupadaAhora(cancha.getId());
 
-    public VistaCeldaCancha() {
-        // Estilos y posición de elementos
+                // 🔁 Actualiza el objeto en memoria
+                cancha.setEstado(ocupada ? 1 : 0);
+
+                // 🔁 Cambia color del círculo visual
+                estadoCircle.setFill(ocupada ? Color.RED : Color.LIMEGREEN);
+
+                // 🔁 Actualiza en la base de datos
+                Disponibilidad.actualizarEstadoEnBD(cancha.getId(), ocupada);
+
+                // 🔁 Actualiza texto del estado
+                infoLabel2.setText(size.ajustarTamaño(
+                    ocupada ? "Ocupada" : "Disponible", 20
+                ) + " $" + cancha.getPrecio());
+
+                System.out.println("🔄 Cancha " + cancha.getId() + " actualizada. Ocupada: " + ocupada);
+            }
+        });
+    }
+}, 0, 60 * 1000);
+
+    }
+
+    {
         infoContainer.setAlignment(Pos.TOP_LEFT);
         espacio.setMinWidth(10);
         infoLabel.setPrefWidth(100);
@@ -43,7 +70,6 @@ public class VistaCeldaCancha extends ListCell<Cancha> {
         HBox.setMargin(estadoCircle, new Insets(10, 10, 10, 10));
         HBox.setMargin(deleteButton, new Insets(15, 0, 5, 10));
 
-        // Acción del botón eliminar
         deleteButton.setOnAction(event -> {
             Cancha cancha = getItem();
             if (cancha != null) {
@@ -51,41 +77,23 @@ public class VistaCeldaCancha extends ListCell<Cancha> {
                 EliminarCancha.eliminarCancha(cancha);
             }
         });
-
-        // Inicializa el Timeline para actualizar la disponibilidad cada minuto
-        timeline = new Timeline(new KeyFrame(Duration.seconds(0), e -> actualizarDisponibilidad()),
-                                new KeyFrame(Duration.minutes(1)));
-        timeline.setCycleCount(Timeline.INDEFINITE);
-        timeline.play();
-    }
-
-    // Método que revisa disponibilidad y actualiza el color del círculo
-    private void actualizarDisponibilidad() {
-        Cancha cancha = getItem();
-        if (cancha != null) {
-            System.out.println("Actualizando disponibilidad de: " + cancha.getTipoDeCancha());
-            boolean ocupada = Disponibilidad.estaOcupadaAhora(cancha.getTipoDeCancha());
-            estadoCircle.setFill(ocupada ? Color.RED : Color.LIMEGREEN);
-        }
     }
 
     @Override
     protected void updateItem(Cancha cancha, boolean empty) {
         super.updateItem(cancha, empty);
-
         if (empty || cancha == null) {
             setText(null);
             setGraphic(null);
         } else {
-            String tipo = size.ajustarTamaño(cancha.getTipoDeCancha(), 20);
-            String estado = size.ajustarTamaño(cancha.getEstado(), 20);
-            String precio = "$" + size.ajustarTamaño(String.valueOf(cancha.getPrecio()), 10);
+            infoLabel.setText(size.ajustarTamaño(cancha.getTipoDeCancha(), 20));
+            infoLabel2.setText(size.ajustarTamaño(cancha.getEstado() == 1 ? "Ocupada" : "Disponible", 20) + 
+                            " $" + cancha.getPrecio());
 
-            infoLabel.setText(tipo);
-            infoLabel2.setText(estado + precio);
+            boolean ocupada = Disponibilidad.estaOcupadaAhora(cancha.getId());
+            estadoCircle.setFill(ocupada ? Color.RED : Color.LIMEGREEN);
+            Disponibilidad.actualizarEstadoEnBD(cancha.getId(), ocupada); // estado en tabla `canchas`
 
-            // Refresca disponibilidad al cambiar de celda también
-            actualizarDisponibilidad();
 
             setGraphic(hbox);
         }
