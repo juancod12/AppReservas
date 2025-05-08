@@ -1,46 +1,50 @@
 package service;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.List;
-import javafx.application.Platform;
-import java.util.Timer;
-import java.util.TimerTask;
-import model.Reserva;
+
+import Sqlconexion.Conexion;
 
 public class Disponibilidad {
 
-    // Función que puedes llamar una sola vez al iniciar la app
-    public static void iniciarVerificacionEnTiempoReal(Runnable actualizarVista) {
-        Timer timer = new Timer(true);
-        timer.scheduleAtFixedRate(new TimerTask() {
-            @Override
-            public void run() {
-                Platform.runLater(actualizarVista);
-            }
-        }, 0, 60 * 1000); // cada minuto
-    }
-
-    public static boolean estaOcupadaAhora(String nombreCancha) {
-        List<Reserva> reservas = obtenerReservasH.obtenerReservas();
-        LocalDate hoy = LocalDate.now();
-        LocalTime ahora = LocalTime.now().withSecond(0).withNano(0);
+    // Verifica si una cancha está ocupada ahora, usando el ID de la cancha
+    public static boolean estaOcupadaAhora(int canchaId) {
+        String sql = "SELECT * FROM reservas WHERE id_cancha = ? AND fecha = ? AND ? BETWEEN hora AND ADDTIME(hora, '01:00:00')";
     
-        for (Reserva reserva : reservas) {
-            if (reserva.getFecha().toLocalDate().equals(hoy) &&
-                reserva.getTipoDeCancha().equalsIgnoreCase(nombreCancha)) {
+        try (Connection conn = Conexion.conectar();
+            PreparedStatement stmt = conn.prepareStatement(sql)) {
     
-                LocalTime inicio = reserva.getHora().toLocalTime();
-                LocalTime fin = inicio.plusHours(1); // Duración de la reserva: 1 hora
+            stmt.setInt(1, canchaId);
+            stmt.setDate(2, java.sql.Date.valueOf(LocalDate.now()));
+            stmt.setTime(3, java.sql.Time.valueOf(LocalTime.now()));
     
-                if (!ahora.isBefore(inicio) && ahora.isBefore(fin)) {
-                    return true; // La cancha está ocupada en este momento
-                }
-            }
+            ResultSet rs = stmt.executeQuery();
+            return rs.next(); // hay al menos una reserva
+    
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        return false; 
+    
+        return false;
     }
     
+
+    // Actualiza el campo "estado" de la cancha en la base de datos (1 = ocupada, 0 = disponible)
+    public static void actualizarEstadoEnBD(int canchaId, boolean ocupada) {
+        String sql = "UPDATE canchas SET estado = ? WHERE id = ?";
+
+        try (Connection conn = Conexion.conectar();
+            PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, ocupada ? 1 : 0);
+            stmt.setInt(2, canchaId);
+            stmt.executeUpdate();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }
-
-

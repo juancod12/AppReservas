@@ -17,19 +17,19 @@ public class Obtenercanchas {
         String query = "SELECT id, tipo, estado, precio FROM canchas";
 
         try (Connection conn = Conexion.conectar();
-             PreparedStatement stmt = conn.prepareStatement(query);
-             ResultSet rs = stmt.executeQuery()) {
+            PreparedStatement stmt = conn.prepareStatement(query);
+            ResultSet rs = stmt.executeQuery()) {
 
             while (rs.next()) {
                 int id = rs.getInt("id");
                 String tipo = rs.getString("tipo");
-                String estado = rs.getString("estado");
+                int estado = rs.getInt("estado");
                 int precio = rs.getInt("precio");
                 System.out.println(estado);
-                if(estado.equals("0")){
-                    estado= "Disponible";
+                if(estado == 0){
+                    estado= 0;
                 }else{
-                    estado= "Ocupada";
+                    estado= 1;
                 }
                 canchas.add(new Cancha( id, tipo, estado, precio));
             }

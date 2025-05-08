@@ -54,7 +54,7 @@ public class ventana extends Application {
         }
         launch(args);
 
-        System.out.println("¿Está ocupada la cancha de futbol 5? " + Disponibilidad.estaOcupadaAhora("Fútbol 5"));
+        System.out.println("¿Está ocupada la cancha de futbol 5? " + Disponibilidad.estaOcupadaAhora(0));
 
     }
 }

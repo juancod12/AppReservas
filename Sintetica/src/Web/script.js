@@ -28,7 +28,8 @@ document.getElementById('verificar-btn').addEventListener('click', () => {
 
     console.log("Datos enviados al servidor:", { fecha, hora, cancha });
 
-    fetch('http://localhost:3001/verificar-disponibilidad', {
+
+    fetch('http://localhost:3002/verificar-disponibilidad', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ fecha, hora, cancha })
@@ -65,7 +66,7 @@ document.getElementById('reserva-form').addEventListener('submit', (e) => {
 
     const reserva = { nombre, telefono, correo, fecha, hora, cancha };
 
-    fetch('http://localhost:3001/reservar', {
+    fetch('http://localhost:3002/reservar', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(reserva)
