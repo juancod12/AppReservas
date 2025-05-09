@@ -16,7 +16,7 @@ public class obtenerReservasH {
 
     public static ObservableList<Reserva> obtenerReservas() {
         ObservableList<Reserva> reservas = FXCollections.observableArrayList();
-        String query = "SELECT nombre, fecha, hora, cancha, id, telefono, correo  FROM reservas";
+        String query = "SELECT nombre, fecha, hora , id_cancha, telefono, correo, cancha FROM reservas";
 
         try (Connection conn = Conexion.conectar();
             PreparedStatement stmt = conn.prepareStatement(query);
@@ -28,11 +28,11 @@ public class obtenerReservasH {
                 Date fech = rs.getDate("fecha");
                 Time  hora = rs.getTime("hora");
                 String cancha = rs.getString("cancha");
-                int id = rs.getInt("id");
+                int id = rs.getInt("id_cancha");
                 String telefono = rs.getString("telefono");
                 String correo = rs.getString("correo");
                 
-                reservas.add(new Reserva(cancha, nombre, fech, hora, id, telefono, correo));
+                reservas.add(new Reserva(cancha , nombre, fech, hora, id, telefono, correo));
                 
 
             }
@@ -42,14 +42,5 @@ public class obtenerReservasH {
         return reservas;
     }
     
-    
 
-
-
-
-
-
-
-
-    
 }

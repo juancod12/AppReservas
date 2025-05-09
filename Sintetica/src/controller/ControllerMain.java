@@ -1,9 +1,11 @@
 package controller;
 
+import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import javax.swing.JPanel;
 
@@ -194,6 +196,15 @@ public void mostrarHoraEnTiempoReal(Label Hora) {
     reloj.setCycleCount(Timeline.INDEFINITE);
     reloj.play();
 }
+/*fecha del dia */
+@FXML
+private Label LabelFecha;
+private void octenerFecha(Label fecha){
+    LocalDate hoy = LocalDate.now();
+    DateTimeFormatter formatoFecha = DateTimeFormatter.ofPattern("d MMMM yyyy", new Locale("es", "ES"));
+    String fechaActual = hoy.format(formatoFecha).toLowerCase();
+    fecha.setText(fechaActual);
+}
 
 
 
@@ -201,6 +212,8 @@ public void mostrarHoraEnTiempoReal(Label Hora) {
     @FXML
     void initialize() {
         mostrarHoraEnTiempoReal(HoraLabel);
+        octenerFecha(LabelFecha);
+
        
        
 
@@ -422,6 +435,12 @@ void ConfigContinuar(ActionEvent event){
 void CerrarConfig(){
     paneCambioLogin.setVisible(false);
     paneCambioLogin.setManaged(false);
+
+
+}
+@FXML
+void Estadisticas(){
+  
 
 
 }

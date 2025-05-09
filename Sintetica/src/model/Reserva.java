@@ -49,7 +49,6 @@ public class Reserva extends Datos{
     public String getCorreo() {
         return correo;
     }
-      
     
     
 }
