@@ -87,11 +87,11 @@ app.post('/reservar', async (req, res) => {
         }
 
         await connection.promise().query(
-            `INSERT INTO reservas (nombre, fecha, hora, id_cancha, telefono, correo)
-            VALUES (?, ?, ?, ?, ?, ?)`,
-            [nombre, fecha, hora, canchaLibre, telefono, correo]
+            `INSERT INTO reservas (nombre, fecha, hora, id_cancha, telefono, correo, cancha)
+            VALUES (?, ?, ?, ?, ?, ?, ?)`,
+            [nombre, fecha, hora, canchaLibre, telefono, correo, tipo]
         );
-
+        
         res.send('✅ Reserva guardada correctamente');
 
     } catch (err) {
