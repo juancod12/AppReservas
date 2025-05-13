@@ -17,6 +17,10 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.geometry.Side;
+import javafx.scene.chart.BarChart;
+import javafx.scene.chart.LineChart;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
@@ -40,6 +44,7 @@ import model.Reserva;
 import service.BarraDeBusqueda;
 import service.DiaSemana;
 import service.EliminarCancha;
+import service.Estadisticas;
 import service.Login;
 import service.Obtenercanchas;
 import service.RegistrarCancha;
@@ -56,6 +61,9 @@ private Pane penelNewCancha;
 private Pane PaneHistorial;
 @FXML
 private Pane paneReserva;
+@FXML
+private Pane paneEstadistica;
+
 
 /* crear cancha nueva elementos */
 @FXML
@@ -147,15 +155,21 @@ private ComboBox<String> AnoFiltro;
 private AnchorPane paneCambioLogin;
 @FXML
 private PasswordField paswordConfig;
+/*elementos de estadisticas */
 
+@FXML
+public BarChart<String,Number> GraficoDeBarras;
+@FXML
+public LineChart<String,Number> GraficoLinea;
 
 /*Ocultamiento de panel  */
 
-public void ocultarpaneles(Pane panel1,Pane panel2,Pane panel3){
+public void ocultarpaneles(Pane panel1,Pane panel2,Pane panel3,Pane panel4){
     ArrayList<Pane> Paneles = new ArrayList<>(); ;
     Paneles.add(panel1);
     Paneles.add(panel2);
     Paneles.add(panel3);
+    Paneles.add(panel4);
     for( int i=0; i < Paneles.size(); i++){
         Pane panel = Paneles.get(i);
         if(panel != null){ 
@@ -205,6 +219,82 @@ private void octenerFecha(Label fecha){
     String fechaActual = hoy.format(formatoFecha).toLowerCase();
     fecha.setText(fechaActual);
 }
+/*cargara elementos del grafico */
+@FXML
+public void cargarGraficoBarras() {
+    int[] dias = new int[7];
+    dias = Estadisticas.DiasFrecuentes();
+
+    // Limpiar el gráfico si ya había datos anteriores
+    GraficoDeBarras.getData().clear();
+
+    // Crear la serie con los nuevos datos
+    XYChart.Series<String, Number> serie1 = new XYChart.Series<>();
+    GraficoDeBarras.setLegendVisible(false);
+    
+
+    // Agregar datos
+    serie1.getData().add(new XYChart.Data<>("Lunes", dias[0]));
+    serie1.getData().add(new XYChart.Data<>("Martes", dias[1]));
+    serie1.getData().add(new XYChart.Data<>("Miércoles", dias[2]));
+    serie1.getData().add(new XYChart.Data<>("Jueves", dias[3]));
+    serie1.getData().add(new XYChart.Data<>("Viernes", dias[4]));
+    serie1.getData().add(new XYChart.Data<>("Sábado", dias[5]));
+    serie1.getData().add(new XYChart.Data<>("Domingo", dias[6]));
+
+   
+
+    // Colores para cada día (puedes personalizarlos)
+    String[] colores = {
+        "#e74c3c", // Lunes - rojo
+        "#3498db", // Martes - azul
+        "#2ecc71", // Miércoles - verde
+        "#f1c40f", // Jueves - amarillo
+        "#9b59b6", // Viernes - violeta
+        "#1abc9c", // Sábado - turquesa
+        "#c0392b"  // Domingo - rojo 
+    };
+
+    // Cambiar el color de cada barra en la serie después de que las barras estén cargadas
+    for (int i = 0; i < serie1.getData().size(); i++) {
+        final XYChart.Data<String, Number> data = serie1.getData().get(i);
+        final String color = colores[i % colores.length];
+
+        // Añadir el listener para cambiar el color de la barra cuando esté disponible
+        data.nodeProperty().addListener((obs, oldNode, newNode) -> {
+            if (newNode != null) {
+                // Cambiar el color de la barra existente
+                newNode.setStyle("-fx-bar-fill: " + color + ";");
+            }
+        });
+    }
+    // Añadir la serie al gráfico
+    GraficoDeBarras.getData().add(serie1);
+    GraficoDeBarras.getXAxis().setLabel("Días de la Semana");
+    GraficoDeBarras.getYAxis().setLabel("Cantidad de Reservas");
+}
+/*carga del grafico de lineas */
+@FXML
+public void CargarGraficoLinea(){
+    int[] Ganancias = Estadisticas.GananciasMes();
+
+    GraficoLinea.getData().clear(); // Limpiar datos anteriores
+    XYChart.Series<String, Number> serie1 = new XYChart.Series<>();
+    int totalMes = 0;
+    for (int i = 0; i < Ganancias.length; i++) {
+        int valor = Ganancias[i];
+        totalMes +=valor  ;      
+        serie1.getData().add(new XYChart.Data<>(String.valueOf(i + 1), valor));
+    }
+    String textoFormateado = String.format("%,d", totalMes);
+    GraficoLinea.setLegendSide(Side.TOP);
+    serie1.setName("Total Ganancia: "+ textoFormateado );
+    GraficoLinea.getData().add(serie1);
+    GraficoLinea.getXAxis().setLabel("Días");
+    GraficoLinea.getYAxis().setLabel("Dinero en pesos");
+
+}
+
 
 
 
@@ -213,6 +303,8 @@ private void octenerFecha(Label fecha){
     void initialize() {
         mostrarHoraEnTiempoReal(HoraLabel);
         octenerFecha(LabelFecha);
+        cargarGraficoBarras();
+        CargarGraficoLinea();
 
        
        
@@ -222,7 +314,7 @@ private void octenerFecha(Label fecha){
     /* accion del boton canchas */
     @FXML
     void Canchas(ActionEvent event) {
-        ocultarpaneles(paneReserva,  PaneHistorial,null);
+        ocultarpaneles(paneReserva,  PaneHistorial,paneEstadistica,null);
 
         System.out.println("dentro del botton");
         paneCanchas.setVisible(true);
@@ -241,7 +333,7 @@ private void octenerFecha(Label fecha){
 /* Canchas-[Accion del botton nueva cancha] */
 @FXML
 void CrearCancha(ActionEvent event) {
-    ocultarpaneles(paneReserva,  PaneHistorial,paneCanchas);
+    ocultarpaneles(paneReserva,  PaneHistorial,paneCanchas,paneEstadistica);
     System.out.println("funciona crear");
     penelNewCancha.setVisible(true);
 
@@ -291,7 +383,7 @@ void CerrarCrear() {
 /*Accion Accion del botton Reservas */
 @FXML
 void mostrarReservas(ActionEvent event){
-    ocultarpaneles(paneCanchas, PaneHistorial,penelNewCancha);
+    ocultarpaneles(paneCanchas, PaneHistorial,penelNewCancha,paneEstadistica);
     System.out.println("estoy en reservas");
     //mostrar las reservas del dia pagina principal 
     paneReserva.setVisible(true);
@@ -346,7 +438,7 @@ void mostrarReservas(ActionEvent event){
 @FXML
 void VerHistorial(ActionEvent event){
     System.out.println("Dentro de historial");
-    ocultarpaneles(paneCanchas, paneReserva, null);
+    ocultarpaneles(paneCanchas, paneReserva, paneEstadistica,null);
 
     
     //paneReserva.setVisible(true);
@@ -440,7 +532,8 @@ void CerrarConfig(){
 }
 @FXML
 void Estadisticas(){
-  
+    ocultarpaneles(paneCanchas, paneReserva, PaneHistorial,null);
+    paneEstadistica.setVisible(true);
 
 
 }

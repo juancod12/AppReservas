@@ -30,6 +30,7 @@ public Label MensajeError;
      /* metodo iniciar */
 @FXML
 void initialize() {
+  
 
     
     

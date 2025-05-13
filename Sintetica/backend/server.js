@@ -9,12 +9,12 @@ const port = 3002;
 app.use(bodyParser.json());
 app.use(cors());
 
-// Conexión a MySQL
+// Configuración de la conexión a MySQL
 const connection = mysql.createConnection({
     host: 'localhost',
-    user: 'root',
-    password: '12152005David@',
-    database: 'negocio'
+    user: 'root', 
+    password: 'juan12drh#', //Cambiar a su contraseña de Mysql
+    database: 'negocio' 
 });
 
 connection.connect((err) => {

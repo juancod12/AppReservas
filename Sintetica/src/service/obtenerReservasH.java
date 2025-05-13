@@ -16,7 +16,7 @@ public class obtenerReservasH {
 
     public static ObservableList<Reserva> obtenerReservas() {
         ObservableList<Reserva> reservas = FXCollections.observableArrayList();
-        String query = "SELECT nombre, fecha, hora , id_cancha, telefono, correo, cancha FROM reservas";
+        String query = "SELECT nombre, fecha, hora , id_cancha, telefono, correo, cancha  FROM reservas";
 
         try (Connection conn = Conexion.conectar();
             PreparedStatement stmt = conn.prepareStatement(query);
@@ -32,7 +32,7 @@ public class obtenerReservasH {
                 String telefono = rs.getString("telefono");
                 String correo = rs.getString("correo");
                 
-                reservas.add(new Reserva(cancha , nombre, fech, hora, id, telefono, correo));
+                reservas.add(new Reserva(cancha, nombre, fech, hora, id, telefono, correo));
                 
 
             }
@@ -41,6 +41,26 @@ public class obtenerReservasH {
         }
         return reservas;
     }
-    
+    public static ObservableList<Reserva> obtenerReservasEstadisticas() {
+        ObservableList<Reserva> reservas = FXCollections.observableArrayList();
+        String query = "SELECT  fecha , id_cancha,  cancha  FROM reservas";
 
+        try (Connection conn = Conexion.conectar();
+            PreparedStatement stmt = conn.prepareStatement(query);
+            ResultSet rs = stmt.executeQuery()) {
+
+            while (rs.next()) { 
+                
+                Date fech = rs.getDate("fecha");
+                String cancha = rs.getString("cancha");
+                int id = rs.getInt("id_cancha");
+   
+                reservas.add(new Reserva(cancha,fech,  id));
+
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return reservas;
+    }
 }

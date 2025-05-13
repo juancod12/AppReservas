@@ -11,8 +11,17 @@ public class Reserva extends Datos{
     private int id;           
     private String telefono;         
     private String correo;
+    
 
     
+    
+
+    public Reserva(String tipoDeCancha, Date fecha, int id) {
+        super(tipoDeCancha);
+        this.fecha = fecha;
+        this.id = id;
+    }
+
     public Reserva( String nombreUsuario,String tipoDeCancha,  Time hora, String telefono) {
         super(tipoDeCancha);
         this.nombreUsuario = nombreUsuario;
@@ -30,6 +39,7 @@ public class Reserva extends Datos{
         this.telefono = telefono;
         this.correo = correo;
     }
+
 
     public String getNombreUsuario() {
         return nombreUsuario;
@@ -49,6 +59,7 @@ public class Reserva extends Datos{
     public String getCorreo() {
         return correo;
     }
+      
     
     
 }

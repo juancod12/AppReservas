@@ -35,21 +35,21 @@ public class VistaCeldaCancha extends ListCell<Cancha> {
             if (cancha != null) {
                 boolean ocupada = Disponibilidad.estaOcupadaAhora(cancha.getId());
 
-                // 🔁 Actualiza el objeto en memoria
+                //  Actualiza el objeto en memoria
                 cancha.setEstado(ocupada ? 1 : 0);
 
-                // 🔁 Cambia color del círculo visual
+                // Cambia color del círculo visual
                 estadoCircle.setFill(ocupada ? Color.RED : Color.LIMEGREEN);
 
-                // 🔁 Actualiza en la base de datos
+                //  Actualiza en la base de datos
                 Disponibilidad.actualizarEstadoEnBD(cancha.getId(), ocupada);
 
-                // 🔁 Actualiza texto del estado
+                //  Actualiza texto del estado
                 infoLabel2.setText(size.ajustarTamaño(
                     ocupada ? "Ocupada" : "Disponible", 20
                 ) + " $" + cancha.getPrecio());
 
-                System.out.println("🔄 Cancha " + cancha.getId() + " actualizada. Ocupada: " + ocupada);
+                System.out.println(" Cancha " + cancha.getId() + " actualizada. Ocupada: " + ocupada);
             }
         });
     }

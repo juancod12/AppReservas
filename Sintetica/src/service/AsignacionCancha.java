@@ -49,7 +49,7 @@ public class AsignacionCancha {
     private static boolean estaOcupada(int canchaId, LocalDate fecha, LocalTime hora) {
         String sql = """
             SELECT * FROM reservas
-            WHERE id_cancha = ? AND fecha = ? 
+            WHERE id = ? AND fecha = ? 
             AND ? BETWEEN hora AND ADDTIME(hora, '01:00:00')
         """;
 

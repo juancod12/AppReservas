@@ -12,7 +12,7 @@ public class Disponibilidad {
 
     // Verifica si una cancha está ocupada ahora, usando el ID de la cancha
     public static boolean estaOcupadaAhora(int canchaId) {
-        String sql = "SELECT * FROM reservas WHERE id_cancha = ? AND fecha = ? AND ? BETWEEN hora AND ADDTIME(hora, '01:00:00')";
+        String sql = "SELECT * FROM reservas WHERE id = ? AND fecha = ? AND ? BETWEEN hora AND ADDTIME(hora, '01:00:00')";
     
         try (Connection conn = Conexion.conectar();
             PreparedStatement stmt = conn.prepareStatement(sql)) {
