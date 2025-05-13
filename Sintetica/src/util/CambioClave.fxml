@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.geometry.*?>
 
-<AnchorPane xmlns:fx="http://javafx.com/fxml" style="-fx-background-color: #f0f8ff;" prefWidth="400" prefHeight="500">
+<AnchorPane xmlns:fx="http://javafx.com/fxml" style="-fx-background-color: #f0f8ff;" prefWidth="400" prefHeight="500" fx:controller="controller.CambioClaveController">
 
    <VBox alignment="CENTER" spacing="20" layoutX="50" layoutY="20" prefWidth="300" prefHeight="460">
 
@@ -22,7 +22,7 @@
 
       <VBox spacing="15" alignment="CENTER_LEFT">
 
-            <!-- Contraseña Actual -->
+            <!-- Usuario Contraseña Actual -->
             <HBox spacing="10" alignment="CENTER_LEFT">
                <ImageView fitHeight="20" fitWidth="20" preserveRatio="true">
                   <image>
@@ -30,8 +30,8 @@
                   </image>
                </ImageView>
                <VBox spacing="5">
-                  <Label text="Contraseña Actual" style="-fx-font-size: 14px; -fx-text-fill: #34495e;" />
-                  <PasswordField fx:id="txtPasswordActual" promptText="Ingresa tu contraseña actual" style="-fx-pref-width: 250px;"/>
+                  <Label text="Usuario" style="-fx-font-size: 14px; -fx-text-fill: #34495e;" />
+                  <PasswordField fx:id="txUsuario" promptText="Ingresa tu Usuario" style="-fx-pref-width: 250px;"/>
                </VBox>
             </HBox>
 
@@ -62,17 +62,18 @@
             </HBox>
 
       </VBox>
-
-      <!-- Botón Guardar Cambios -->
-      <Button text="Guardar Cambios" style="
-            -fx-background-color: #27ae60;
-            -fx-text-fill: white;
-            -fx-font-weight: bold;
-            -fx-background-radius: 20;
-            -fx-pref-width: 180px;
-            -fx-cursor: hand;
-      " />
-
+         <Label fx:id="MensajeDiferentesClave" text="Las contrasenas no coinsiden" style="-fx-font-size: 14px; -fx-text-fill:rgb(245, 139, 19);" visible="false"/>
+         <!-- Botón Guardar Cambios -->
+         <Button  text="Guardar Cambios" style="
+               -fx-background-color: #27ae60;
+               -fx-text-fill: white;
+               -fx-font-weight: bold;
+               -fx-background-radius: 20;
+               -fx-pref-width: 180px;
+               -fx-cursor: hand;
+         " onAction="#GuardarNuevaClave" />
+       <Label fx:id="MensajeExito" text="Contrasena guargada exitosamente" style="-fx-font-size: 14px; -fx-text-fill:rgb(45, 117, 189);" visible="false"/>
+       <Label fx:id="MensajeError" text="Error al cambiar contrasena" style="-fx-font-size: 14px; -fx-text-fill:rgb(224, 29, 29);" visible="false"/>
    </VBox>
 
 </AnchorPane>

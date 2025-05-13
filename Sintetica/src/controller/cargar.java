@@ -28,8 +28,8 @@ public class cargar {
                         stageActual.show();
 
             } catch (IOException ex) {
-                     ex.printStackTrace();
-             }
+                    ex.printStackTrace();
+            }
     }
     
     public void cargarRecursos(ActionEvent event, String url ,String Nombre ){
@@ -39,14 +39,14 @@ public class cargar {
                         Parent root = loader.load();
 
                         // Obtener el Stage actual
-                         Stage ventanaEmergente = new Stage();
+                        Stage ventanaEmergente = new Stage();
                         ventanaEmergente.setTitle(Nombre);
                         ventanaEmergente.setScene(new Scene(root));
                         ventanaEmergente.initModality(Modality.APPLICATION_MODAL); // Bloquea la ventana principal
                         ventanaEmergente.showAndWait(); // Espera hasta que se cierre
 
             } catch (IOException ex) {
-                     ex.printStackTrace();
-             }
+                    ex.printStackTrace();
+            }
     }
 }

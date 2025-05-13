@@ -438,6 +438,12 @@ void CerrarConfig(){
 
 
 }
+@FXML
+void Estadisticas(){
+  
+
+
+}
     
 
 
